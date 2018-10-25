@@ -10,7 +10,7 @@ ENV RCLONE_VERSION="v1.44" \
 RUN apt-get update \
  && apt-get install -y wget fuse ca-certificates \
  && rm -r /var/lib/apt/lists/* \
- && wget https://github.com/ncw/rclone/releases/download/${RCLONE_VERSION}/rclone-${RCLONE_VERSION}-linux-amd64.deb -O /tmp/rclone.deb \
+ && wget "https://github.com/ncw/rclone/releases/download/${RCLONE_VERSION}/rclone-${RCLONE_VERSION}-linux-amd64.deb" -O /tmp/rclone.deb \
  && dpkg -i /tmp/rclone.deb
 
 # Volume for persistent data and configuration files
