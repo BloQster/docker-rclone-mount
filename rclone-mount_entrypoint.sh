@@ -3,17 +3,17 @@ set -e
 
 function fuse_unmount {
   echo "Unmounting: fusermount $RCLONE_MOUNTPOINT at: $(date +%Y.%m.%d-%T)"
-  fusermount -u "$RCLONE_MOUNTPOINT"
+  fusermount -u -z "$RCLONE_MOUNTPOINT"
 }
 
 function term_handler {
-  echo "Received SIGTERM, propagating to rclone"
+  echo "Received SIGINT/TERM/STOP/KILL, propagating to rclone"
   kill -s TERM "$RCLONE_PID"
   fuse_unmount
   exit $?
 }
 
-trap term_handler SIGINT SIGTERM
+trap term_handler SIGINT SIGTERM SIGSTOP SIGKILL
 
 if [ ! -f "$RCLONE_CONFIG" ]; then
 	echo "rclone config file does not exist."
