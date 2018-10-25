@@ -8,7 +8,7 @@ function fuse_unmount {
 
 function term_handler {
   echo "Received SIGTERM, propagating to rclone"
-  kill -s TERM ${!}
+  kill -s TERM "$RCLONE_PID"
   fuse_unmount
   exit $?
 }
@@ -35,7 +35,7 @@ if [ -f "$RCLONE_CONFIG_PASS_SECRET_FILE" ]; then
 	export RCLONE_CONFIG_PASS=$(cat "$RCLONE_CONFIG_PASS_SECRET_FILE")
 fi
 
-rclone mount "$RCLONE_REMOTE":/ "$RCLONE_MOUNTPOINT" ${RCLONE_MOUNTOPTS[@]}
+rclone mount "$RCLONE_REMOTE":/ "$RCLONE_MOUNTPOINT" ${RCLONE_MOUNTOPTS[@]} &
 wait ${!}
 echo "rclone crashed at: $(date +%Y.%m.%d-%T)"
 fuse_unmount
