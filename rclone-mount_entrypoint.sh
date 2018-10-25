@@ -3,7 +3,7 @@ set -e
 
 function fuse_unmount {
   echo "Unmounting: fusermount $RCLONE_MOUNTPOINT at: $(date +%Y.%m.%d-%T)"
-  fusermount "$RCLONE_MOUNTPOINT"
+  fusermount -u "$RCLONE_MOUNTPOINT"
 }
 
 function term_handler {
@@ -35,7 +35,7 @@ if [ -f "$RCLONE_CONFIG_PASS_SECRET_FILE" ]; then
 	export RCLONE_CONFIG_PASS=$(cat "$RCLONE_CONFIG_PASS_SECRET_FILE")
 fi
 
-rclone mount "$RCLONE_REMOTE":/ "$RCLONE_MOUNTPOINT" "$RCLONE_MOUNTOPTS"
+rclone mount "$RCLONE_REMOTE":/ "$RCLONE_MOUNTPOINT" "$RCLONE_MOUNTOPTS[@]"
 wait ${!}
 echo "rclone crashed at: $(date +%Y.%m.%d-%T)"
 fuse_unmount
