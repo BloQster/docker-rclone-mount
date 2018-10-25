@@ -13,7 +13,14 @@ function term_handler {
   exit $?
 }
 
+function cache_handler {
+  echo "Received SIGHUP, propagating to rclone"
+  kill -SIGHUP ${!}
+  wait ${!}
+}
+
 trap term_handler SIGINT SIGTERM SIGSTOP SIGKILL
+trap cache_handler SIGHUP
 
 if [ ! -f "$RCLONE_CONFIG" ]; then
 	echo "rclone config file does not exist."
