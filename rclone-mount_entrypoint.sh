@@ -8,7 +8,7 @@ function fuse_unmount {
 
 function term_handler {
   echo "Received SIGTERM, propagating to rclone"
-  kill -TERM ${!}
+  kill -s TERM ${!}
   fuse_unmount
   exit $?
 }
