@@ -27,7 +27,6 @@ if [ ! -f "$RCLONE_CONFIG" ]; then
 	exit 1
 fi
 
-
 if [ -z "$RCLONE_REMOTE" ]; then
 	echo "rclone remote not supplied"
 	exit 2
@@ -42,7 +41,7 @@ if [ -f "$RCLONE_CONFIG_PASS_SECRET_FILE" ]; then
 	export RCLONE_CONFIG_PASS=$(cat "$RCLONE_CONFIG_PASS_SECRET_FILE")
 fi
 
-rclone mount "$RCLONE_REMOTE":/ "$RCLONE_MOUNTPOINT" ${RCLONE_MOUNTOPTS[@]} &
+rclone mount "$RCLONE_REMOTE":/ "$RCLONE_MOUNTPOINT" ${RCLONE_MOUNTOPTS[@]} > /dev/stdout &
 wait ${!}
 echo "rclone crashed at: $(date +%Y.%m.%d-%T)"
 fuse_unmount
