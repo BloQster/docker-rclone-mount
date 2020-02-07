@@ -2,7 +2,7 @@ FROM ubuntu:bionic
 MAINTAINER Philipp Holler <philipp.holler93@googlemail.com>
 
 # Set environment variables for build and entrypoint
-ENV RCLONE_VERSION="v1.44" \
+ENV RCLONE_VERSION="v1.51.0" \
     RCLONE_CONFIG_DIR="/etc/rclone" \
     RCLONE_CONFIG_PASS_SECRET_FILE="/run/secrets/rclone_config_password"
 ENV RCLONE_CONFIG="${RCLONE_CONFIG_DIR}/rclone.conf"
